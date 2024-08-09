@@ -1,0 +1,29 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        nums.sort()
+        usedset1 = set()
+
+        for cnt, val in enumerate(nums):
+            if val > 0:
+                break
+            if val in usedset1:
+                continue
+            L = cnt + 1
+            R = len(nums) - 1
+            while L < R:
+                if val + nums[L] + nums[R] > 0:
+                    R -= 1
+                elif val + nums[L] + nums[R] < 0:
+                    L += 1
+                else:
+                    ans.append([val, nums[L], nums[R]])
+                    L += 1
+                    R -= 1                    
+                    while L < R and nums[L] == nums[L - 1]:
+                        L += 1
+                    while L < R and nums[R] == nums[R + 1]:
+                        R -= 1
+            
+            usedset1.add(val)
+        return ans
